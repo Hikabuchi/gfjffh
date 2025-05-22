@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Статус с дополнительным полем</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      padding: 2rem 3rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: #2c3e50;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      transition: border-color 0.3s;
+    }
+    select:focus, input[type="text"]:focus {
+      border-color: #2980b9;
+      outline: none;
+      box-shadow: 0 0 6px rgba(41, 128, 185, 0.4);
+    }
+    .additional-field {
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Выберите статус</h1>
+    <label for="status-select">Статус заказа</label>
+    <select id="status-select" name="status">
+      <option value="">-- Выберите статус --</option>
+      <option value="new">Новый</option>
+      <option value="in-progress">В работе</option>
+      <option value="completed">Завершён</option>
+      <option value="cancelled">Отменён</option>
+      <option value="on-hold">На удержании</option>
+    </select>
+    <div class="additional-field" id="cancel-reason-field">
+      <label for="cancel-reason">Причина отмены</label>
+      <input type="text" id="cancel-reason" name="cancelReason" placeholder="Введите причину отмены" />
+    </div>
+  </div>
+
+  <script>
+    const statusSelect = document.getElementById('status-select');
+    const cancelReasonField = document.getElementById('cancel-reason-field');
+
+    statusSelect.addEventListener('change', () => {
+      if (statusSelect.value === 'cancelled') {
+        cancelReasonField.style.display = 'block';
+      } else {
+        cancelReasonField.style.display = 'none';
+        // Optional: clear input field when hidden
+        document.getElementById('cancel-reason').value = '';
+      }
+    });
+  </script>
+</body>
+</html>
+
