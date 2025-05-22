@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        input{
+            border:  1px solid #b3b3b3;
+        }
+        input:valid{
+            border: 1px solid green;
+        }
+        
+        input:invalid{
+            border: 1px solid rgb(212, 14, 14);
+        }
+        
+        input:focus,
+        input:active{
+            outline: none;
+        }
+        .error{
+            color: red;
+        }
+
+        .laoder{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            content: '';
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgb(24, 184, 224), rgb(71, 145, 132), rgb(255, 255, 255));
+            animation: loader-animate 1s infinite linear;
+        }
+
+        @keyframes loader-animate {
+            to{
+                transform: rotate(360deg);
+            }
+        }
+
+        .dispay-none{
+            display: none !important;
+        }
+
+        .laoder::after{
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            content: '';
+            background-color: #fff;
+            border-radius: 50%;
+            top: calc(100% - 49px);
+            left: calc(100% - 45px);
+
+        }
+
+        .modal{
+            position: absolute;
+            display: flex;
+            justify-content: center;align-items: center;
+            background-color: #2c2c2c;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.9;
+
+        }
+        .modal-content{
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 2rem;
+            background-color: #ffffff;
+            width: 300px;
+            height:fit-content;
+            margin: fit-content;
+            font-size: 2rem;
+            color: #075000;
+            box-shadow: 0px 5px 10px rgb(0, 0, 0);
+        }
+
+        .content{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: fit-content;
+        }
+        .input{
+            border-radius: 1rem;
+            padding: 10px;
+            margin: 5px;
+            width: 90%;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 1rem;
+            background-color: #fff;
+            min-width: 300px;
+            padding: 30px;
+            box-shadow: 0px 5px 10px rgb(182, 182, 182);
+        }
+
+        button{
+            width: 100%;
+            background-color: #e01818;
+            color: #fff;
+            border-radius: 1rem;
+            padding: 10px;
+            font-weight: 500;
+            border: none;
+        }
+        .other{
+            display: none;
+        }
+
+        .chekr:checked + .other{
+            display: block;
+        }
+    </style>
+</head>
+<body onload="load()">
+    <div class="modal dispay-none">
+            <div class="modal-content">Успешно</div>
+    </div>
+    <div class="laoder"></div>
+    <div class="content dispay-none">
+       
+        <form action="" method="post">
+            <h1>Регистрация</h1>
+            <div class="form-item">
+                <label for="login">Логин</label><br>
+                <input type="text" class="input" name="login" id="login" required>
+                <p class="error"></p>
+            </div>
+        
+            <div class="form-item">
+                <label for="password">Пароль</label><br>
+                <input type="password" class="input" name="password" id="password" data-decription="Минимум 6 символов" minlength="6" required>
+                <p class="error"></p>
+            </div>
+            <div class="form-item">
+                <label for="text">ФИО</label><br>
+                <input type="text" class="input" name="text" id="text" pattern="[А-яа-яЁё\s]+" data-decription="Допустим только воод кирилици и пробелов" required>
+                <p class="error"></p>
+            </div>
+            <div class="form-item">
+                <label for="tel">Телефон</label><br>
+                <input type="tel" class="input" name="tel" id="tel" pattern="\+[7]\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" placeholder="+7(___) ___-__-__" required>
+                <p class="error"></p>
+            </div>
+            <div class="form-item">
+                <label for="email">Почта</label><br>
+                <input type="email" class="input" name="email" id="email" data-decription="Не верный формат почты" required>
+                <p class="error"></p>
+            </div>
+            <div class="form-item"> 
+
+                <label for="email">Иная услуга</label>
+                <input type="checkbox" name="" id="" class="chekr">
+                <textarea name="" id="" class="other input" placeholder="Уажите иную услугу"></textarea>
+                <p class="error"></p>
+            </div>
+            <div class="spinner-border text-info" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+          <button type="submit">Отправить</button>
+        </form>
+    </div>
+   
+    <script>
+        let telInput= document.querySelector('#tel');
+        telInput.addEventListener("input", function(){
+            let content = this.value.replace(/\D/g, "");
+            if(content.length > 1){
+                if(content === "7" || content === "8"){
+                    this.value = "+7("
+                }
+
+                this.value = 
+                '+7('
+                + content.substring(1,4)
+                + (content.length > 4 ? ')-' : "" )
+                + content.substring(4,7)
+                +(content.length > 7 ? '-' : "" )
+                + content.substring(7,9)
+                + (content.length > 9 ? '-' : "" )             
+                + content.substring(9,11)
+            }
+            
+        });
+        let inputs = document.querySelectorAll('input');
+        inputs.forEach((input)=>{
+                input.addEventListener("input", function(){
+                    if (input.checkValidity()) {
+                        document.querySelector(`#${input.id} ~ p`).textContent="";
+                    } else {
+                        document.querySelector(`#${input.id} ~ p`).textContent= input.dataset.decription;
+                    }
+                });
+            });
+        function load() {
+            setTimeout(()=>{
+                document.querySelector('.laoder').classList.toggle('dispay-none');
+                document.querySelector('.content').classList.toggle('dispay-none');
+            }, 3000)
+        }
+        let form = document.querySelector('form');
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault();
+            document.querySelector('.modal').classList.toggle('dispay-none');
+            setTimeout(()=>{
+                form.submit();
+                document.querySelector('.modal').classList.toggle('dispay-none');
+            }, 3000)
+        })
+    </script>
+</body>
+</html>
